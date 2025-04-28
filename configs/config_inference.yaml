@@ -1,0 +1,12 @@
+general_config:
+  weight_path_generalAD: saved/models_full/GeneralAD.pth
+  weight_path_SimpleNet: saved/models_full/SimpleNet.pth
+  weight_path_VMTAD_onnx: saved/models_full/VMTAD.onnx
+  weight_path_VMTAD: saved/models_full/VMTAD.pth
+  weight_path_PatchCore: saved/models_full/PatchCore.pth
+
+  image_size: 456
+  feature_size: 96
+  feature_channel: 128
+
+  data_path: data_path
