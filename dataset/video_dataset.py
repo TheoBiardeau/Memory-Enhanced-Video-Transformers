@@ -21,10 +21,7 @@ def image_sort(path):
     
 class ImageSequenceDataset(Dataset):
     def __init__(self, root_dirs, sequence_length, transforms = T.ToTensor()):
-        """
-        root_dirs: Liste de dossiers contenant les images
-        sequence_length: Longueur des séquences d'images à charger
-        """
+
 
         folders_path = sorted(glob.glob(os.path.join(root_dirs, "*")), key=folder_sort)
         
@@ -59,10 +56,7 @@ class ImageSequenceDataset(Dataset):
 
 class AdImageSequenceDataset(Dataset):
     def __init__(self, root_dirs, transforms_image = T.ToTensor(), transforms_labels = T.ToTensor()):
-        """
-        root_dirs: Liste de dossiers contenant les images
-        sequence_length: Longueur des séquences d'images à charger
-        """
+
 
         folder_images_path = sorted(glob.glob(os.path.join(root_dirs, "AD", "*")), key=folder_sort)
         
