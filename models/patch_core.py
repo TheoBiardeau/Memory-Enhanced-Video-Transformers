@@ -93,39 +93,26 @@ class PatchCore:
         return features @ self.random_proj_matrix
 
     def greedy_coreset_selection(self):
-        """
-        Réduit la banque de mémoire en utilisant une sélection de coreset gloutonne vectorisée.
-        Cette version met à jour pour chaque échantillon la distance minimale vers le coreset actuel,
-        et sélectionne ensuite le point qui maximise cette distance.
-        """
         if self.memory_bank is None:
-            raise ValueError("La banque de mémoire n'est pas construite.")
+            raise ValueError("Bank is not build")
 
         M = self.memory_bank
         N = M.shape[0]
-        # Projection aléatoire pour réduire la dimensionnalité.
         M_proj = self.random_projection(M)  # Shape: (N, proj_dim)
         
-        # Initialiser avec le premier indice arbitrairement.
         selected_indices = [0]
         
-        # Calculer la distance de tous les points au premier point sélectionné.
         diff = M_proj - M_proj[0].unsqueeze(0)  # Shape: (N, proj_dim)
         min_dists = torch.norm(diff, dim=1)  # Vecteur de forme (N,)
 
-        # Itérer jusqu'à atteindre le nombre cible.
         for i in range(1, self.coreset_target):
-            # Trouver l'indice du candidat qui a la distance minimale maximale.
             best_idx = torch.argmax(min_dists).item()
-            # Si la distance maximale est nulle, on arrête.
             if min_dists[best_idx] == 0:
                 break
             selected_indices.append(best_idx)
-            # Mettre à jour les distances minimales pour chaque point en comparant avec le nouveau point sélectionné.
             new_dists = torch.norm(M_proj - M_proj[best_idx].unsqueeze(0), dim=1)
             min_dists = torch.minimum(min_dists, new_dists)
         
-        # Mettre à jour la banque de mémoire avec le coreset sélectionné.
         self.memory_bank = M[selected_indices]
 
     def compute_anomaly_score(self, test_image):
