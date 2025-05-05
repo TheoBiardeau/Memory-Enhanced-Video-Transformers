@@ -103,7 +103,7 @@ class PatchCore:
         selected_indices = [0]
         
         diff = M_proj - M_proj[0].unsqueeze(0)  # Shape: (N, proj_dim)
-        min_dists = torch.norm(diff, dim=1)  # Vecteur de forme (N,)
+        min_dists = torch.norm(diff, dim=1)  
 
         for i in range(1, self.coreset_target):
             best_idx = torch.argmax(min_dists).item()
