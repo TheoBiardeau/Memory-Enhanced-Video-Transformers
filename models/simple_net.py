@@ -19,7 +19,6 @@ class SimpleNet(nn.Module):
             nn.Conv2d(hidden_features, 1, kernel_size=1)
         )
 
-        # Paramètres pour le bruit et la loss tronquée
         self.sigma = sigma
         self.th_plus = 0.5
         self.th_minus = -0.5
