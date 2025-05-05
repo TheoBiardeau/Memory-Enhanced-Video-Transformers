@@ -10,7 +10,6 @@ class ShortMemory:
     def pop(self, element):
         if len(self.queue) == self.memory_size:
             self.queue.popleft()
-            # print(f"File pleine. Tenseur retiré : {removed}")
         self.queue.append(element)
     
     def init(self, element):
