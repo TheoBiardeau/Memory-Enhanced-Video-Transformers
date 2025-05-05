@@ -92,4 +92,4 @@ class AdImageSequenceDataset(Dataset):
         folder = os.path.split(os.path.split(self.image_paths[idx])[0])[1]
         
         
-        return label_file, folder, images_transformed[0], labels_transformed[0]  # Retourner une séquence d'images en tant que tensor
+        return label_file, folder, images_transformed[0], labels_transformed[0] 
