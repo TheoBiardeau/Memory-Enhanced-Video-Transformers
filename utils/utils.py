@@ -10,13 +10,10 @@ class CosineLoss(nn.Module):
         self.cos_dist = torch.nn.CosineSimilarity()
         
     def forward(self,tensor_1, tensor_2): 
-        # Calculer la distance cosinus entre les tenseurs normalisés
         cosine_similarity = self.cos_dist(tensor_1, tensor_2)
 
-        # La distance cosinus est définie comme 1 - similarité cosinus
         cosine_distance = 1 - cosine_similarity
 
-        # Calculer la perte moyenne
         if self.reduction == 'none' :
             return(cosine_distance)
             
