@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+import matplotlib.pyplot as plt
 
 
 class CosineLoss(nn.Module):
@@ -10,10 +11,13 @@ class CosineLoss(nn.Module):
         self.cos_dist = torch.nn.CosineSimilarity()
         
     def forward(self,tensor_1, tensor_2): 
+        # Calculer la distance cosinus entre les tenseurs normalisés
         cosine_similarity = self.cos_dist(tensor_1, tensor_2)
 
+        # La distance cosinus est définie comme 1 - similarité cosinus
         cosine_distance = 1 - cosine_similarity
 
+        # Calculer la perte moyenne
         if self.reduction == 'none' :
             return(cosine_distance)
             
@@ -32,10 +36,13 @@ class GaussianSmoothing(torch.nn.Module):
         self.kernel_size = kernel_size
         
         # Create a 2D grid for the kernel
-        x = torch.linspace(kernel_size // 2, kernel_size // 2, kernel_size)
-        y = torch.linspace(kernel_size // 2, kernel_size // 2, kernel_size)
-        x, y = torch.meshgrid(x, y)  # Get 2D variables instead of 1D
-        
+        offset = (kernel_size - 1) / 2
+
+        coords = torch.arange(kernel_size, device='cuda') - offset
+
+
+        x, y = torch.meshgrid(coords, coords, indexing='xy')
+    
         # Calculate the Gaussian filter
         gaussian_filter = self.gaussian_2d(x, y)
         
@@ -57,3 +64,4 @@ class GaussianSmoothing(torch.nn.Module):
         
         # Return the alpha-powered smoothed frames
         return (smoothed_frames ** self.alpha)
+  
